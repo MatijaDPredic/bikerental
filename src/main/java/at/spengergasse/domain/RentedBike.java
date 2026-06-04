@@ -41,6 +41,7 @@ public class RentedBike {
     }
 
     public RentedBike(LocalDate rentedAtDate, String bikeCategory, String costumerName, Double price, Integer daysRented, Boolean isInLoyaltyProgram) {
+        setRentedBikeId();
         setRentedAtDate(rentedAtDate);
         setBikeCategory(bikeCategory);
         setCostumerName(costumerName);
