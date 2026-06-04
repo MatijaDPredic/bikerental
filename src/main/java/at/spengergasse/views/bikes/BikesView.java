@@ -1,5 +1,6 @@
 package at.spengergasse.views.bikes;
 
+import at.spengergasse.views.home.HomeView;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Paragraph;
@@ -17,20 +18,13 @@ public class BikesView extends VerticalLayout {
 
     public BikesView() {
         setSpacing(false);
+        setAlignItems(Alignment.CENTER);
 
-        Image img = new Image("images/empty-plant.png", "placeholder plant");
-        img.setWidth("200px");
-        add(img);
+        Image img = new Image("images/logo.png", "Bike Fast Logo");
+        img.getStyle()
+                .setWidth("220px");
 
-        H2 header = new H2("This place intentionally left empty");
-        header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
-        add(header);
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
-
-        setSizeFull();
-        setJustifyContentMode(JustifyContentMode.CENTER);
-        setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        getStyle().set("text-align", "center");
+        add(HomeView.getHeader(),img);
     }
 
 }

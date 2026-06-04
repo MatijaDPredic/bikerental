@@ -1,12 +1,15 @@
 package at.spengergasse.views.home;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.dom.Style;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -22,19 +25,28 @@ public class HomeView extends VerticalLayout {
 
     public HomeView() {
         setSpacing(false);
-        H1 companyName = new H1("Bike Fast");
-        companyName.getStyle()
-                .set("font-family", "cursive")
-                .set("font-size", "6rem")
-                .set("margin", "0");
+        setAlignItems(Alignment.CENTER);
 
-        H2 subName = new H2("... need a ride get it fast at ...");
-        subName.getStyle()
-                .set("margin", "0")
-                .set("color", "gray");
+        HorizontalLayout logoText = new HorizontalLayout();
+        logoText.setWidthFull();
+        logoText.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+
+        Div left = new Div();
+        Div center = new Div();
+        Div right = new Div();
+
+        left.setWidth("33%");
+        center.setWidth("34%");
+        right.setWidth("33%");
+
+        logoText.add(left, center, right);
+
 
         Image img = new Image("images/logo.png", "Bike Fast Logo");
-        img.setWidth("220px");
+        img.getStyle()
+                .setHeight("220px");
+
+        left.add(img);
 
         Paragraph description = new Paragraph(
                 "Bike Fast is the company that saves your day when your feet are slow but your plans are not.\n" +
@@ -51,15 +63,39 @@ public class HomeView extends VerticalLayout {
         description.getStyle()
                 .set("font-size", "22px")
                 .set("line-height", "1.6")
-                .set("text-align", "left")
+                .set("text-align", "center")
                 .set("white-space", "pre-line");
+
+        center.add(description);
 
         H3 name = new H3("Bike Fast GmbH");
         H3 street = new H3("Spengergasse 20");
         H3 city = new H3("1050 Wien");
 
-        add(companyName, subName, img, description, name, street, city);
+        add(getHeader(), logoText, name, street, city);
 
+    }
+
+    public static Component getHeader(){
+
+        H1 companyName = new H1("Bike Fast");
+        companyName.getStyle()
+                .set("font-family", "cursive")
+                .set("font-size", "6rem")
+                .set("margin", "0");
+
+        H2 subName = new H2("... need a ride get it fast at ...");
+        subName.getStyle()
+                .set("margin", "0")
+                .set("color", "gray");
+
+
+        VerticalLayout headerLayout = new VerticalLayout(companyName, subName);
+        headerLayout.setSpacing(false);
+        headerLayout.setPadding(false);
+        headerLayout.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+
+        return headerLayout;
     }
 
 }
