@@ -76,6 +76,26 @@ public class HomeView extends VerticalLayout {
 
     }
 
+    private static @NonNull Paragraph getDescription() {
+        Paragraph description = new Paragraph(
+                """
+                        Bike Fast is the company that saves your day when your feet are slow but your plans are not.
+                         We make getting a ride quick, easy, and a little more fun — because nobody likes waiting\
+                         when there’s somewhere to be.
+                        
+                         With "need a ride get it fast at", Bike Fast \
+                        keeps you moving without the drama, the delay, or the excuses.\
+                        It’s simple: hop on, ride off, and get there faster than you can say\
+                         “Where’s my bike?” \
+                        
+                        
+                        Whether it’s school, the city, or just a last-minute mission,\
+                         Bike Fast is the fast lane for people who do not have time to waste."""
+        );
+        description.setWidth("500px");
+        return description;
+    }
+
     public static Component getHeader(){
 
         H1 companyName = new H1("Bike Fast");
