@@ -1,18 +1,14 @@
 package at.spengergasse.views.home;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.*;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.dom.Style;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.jspecify.annotations.NonNull;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Home")
@@ -20,14 +16,12 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Menu(order = 0, icon = LineAwesomeIconUrl.GLOBE_SOLID)
 public class HomeView extends VerticalLayout {
 
-    private TextField name;
-    private Button sayHello;
-
     public HomeView() {
         setSpacing(false);
         setAlignItems(Alignment.CENTER);
 
         HorizontalLayout logoText = new HorizontalLayout();
+
         logoText.setWidthFull();
         logoText.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
 
@@ -41,30 +35,18 @@ public class HomeView extends VerticalLayout {
 
         logoText.add(left, center, right);
 
-
         Image img = new Image("images/logo.png", "Bike Fast Logo");
         img.getStyle()
                 .setHeight("220px");
 
         left.add(img);
 
-        Paragraph description = new Paragraph(
-                "Bike Fast is the company that saves your day when your feet are slow but your plans are not.\n" +
-                        " We make getting a ride quick, easy, and a little more fun — because nobody likes waiting" +
-                        " when there’s somewhere to be.\n\n With \"need a ride get it fast at\", Bike Fast " +
-                        "keeps you moving without the drama, the delay, or the excuses." +
-                        "It’s simple: hop on, ride off, and get there faster than you can say" +
-                        " “Where’s my bike?” " +
-                        "\n\n" +
-                        "Whether it’s school, the city, or just a last-minute mission," +
-                        " Bike Fast is the fast lane for people who do not have time to waste."
-        );
-        description.setWidth("500px");
+        Paragraph description = getDescription();
         description.getStyle()
                 .set("font-size", "22px")
                 .set("line-height", "1.6")
                 .set("text-align", "center")
-                .set("white-space", "pre-line");
+                .set("white-space", "pre-line");//This line makes a white space appear were a new line is
 
         center.add(description);
 
