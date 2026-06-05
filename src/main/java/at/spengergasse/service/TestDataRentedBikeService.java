@@ -20,7 +20,7 @@ public class TestDataRentedBikeService {
 
         for (int i = 0; i < times; i++) {
             RentedBike rentedBike = new RentedBike();
-            rentedBike.setRentedBikeId(1000L + i);
+            rentedBike.setRentedBikeId();
             rentedBike.setRentedAtDate(LocalDate.now().minusDays(faker.number().numberBetween(0, 30)));
             rentedBike.setBikeCategory(bikeCategories[faker.number().numberBetween(0, bikeCategories.length)]);
             rentedBike.setCostumerName(costumerNames[faker.number().numberBetween(0, costumerNames.length)]);
