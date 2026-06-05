@@ -17,6 +17,11 @@ public class RentedBikeService {
 
     public RentedBikeService(){
         rentedBikes = new ArrayList<>(1000);
+        TestDataRentedBikeService.testData(rentedBikes);
+    }
+
+    public ArrayList<RentedBike> findAll(){
+        return new ArrayList<>(rentedBikes);
     }
 
     @Override

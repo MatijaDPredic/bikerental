@@ -31,13 +31,13 @@ public class RentedBike {
     private static final String[] bikeCategories = {"City Bike", "Trekking Bike","Mountain Bike","E-Bike"};
 
     public RentedBike() {
-        setRentedBikeId();
-        setRentedAtDate(LocalDate.now());
-        setBikeCategory("City Bike");
-        setCostumerName("Unknown");
-        setPrice(8.0);
-        setDaysRented(1);
-        setIsInLoyaltyProgram(false);
+//        setRentedBikeId();
+//        setRentedAtDate(LocalDate.now());
+//        setBikeCategory("City Bike");
+//        setCostumerName("Unknown");
+//        setPrice(8.0);
+//        setDaysRented(1);
+//        setIsInLoyaltyProgram(false);
     }
 
     public RentedBike(LocalDate rentedAtDate, String bikeCategory, String costumerName, Double price, Integer daysRented, Boolean isInLoyaltyProgram) {
