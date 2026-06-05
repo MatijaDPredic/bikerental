@@ -17,11 +17,29 @@ public class RentedBikeService {
 
     public RentedBikeService(){
         rentedBikes = new ArrayList<>(1000);
-        TestDataRentedBikeService.testData(rentedBikes);
+        TestDataRentedBikeService.fillTestData(rentedBikes,10);
     }
 
     public ArrayList<RentedBike> findAll(){
         return new ArrayList<>(rentedBikes);
+    }
+
+    public void removeAllRenters() {
+        rentedBikes.clear();
+    }
+
+    public void add10Renters() {
+        TestDataRentedBikeService.fillTestData(rentedBikes,10);
+    }
+
+    public void add1ToPrice() {
+        for (RentedBike rentedBike : rentedBikes) {
+            rentedBike.setPrice(rentedBike.getPrice() + 1.0);
+        }
+    }
+
+    public void removeLoyalCostumers() {
+        rentedBikes.removeIf(RentedBike::getIsInLoyaltyProgram);
     }
 
     @Override
@@ -30,5 +48,7 @@ public class RentedBikeService {
                 .map(RentedBike::toString)
                 .collect(Collectors.joining("\n"));
     }
+
+
 
 }
