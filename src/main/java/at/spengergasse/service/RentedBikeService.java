@@ -4,6 +4,7 @@ import at.spengergasse.domain.RentedBike;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -50,5 +51,7 @@ public class RentedBikeService {
     }
 
 
-
+    public void addWrong() {
+        rentedBikes.add(new RentedBike(999L,LocalDate.of(2026, 6, 4), "City Bike", "Anna Müller", 113.0, 2, true));
+    }
 }

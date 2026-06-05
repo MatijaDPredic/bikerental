@@ -1,9 +1,12 @@
 package at.spengergasse.views.bikes;
 
 import at.spengergasse.domain.RentedBike;
+import at.spengergasse.domain.RentedBikeException;
 import at.spengergasse.service.RentedBikeService;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
@@ -16,13 +19,14 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Route("bikes")
 @Menu(order = 2, icon = LineAwesomeIconUrl.FILE)
 public class BikesView extends VerticalLayout {
-    private final Grid<RentedBike> grid = new Grid<>(RentedBike.class,true);
+    private final Grid<RentedBike> grid = new Grid<>(RentedBike.class, true);
     private final RentedBikeService rentedBikeService;
 
     Button buttonRemoveAllRenters = new Button("Remove all");
     Button buttonAdd10Renters = new Button("Add 10 Renters");
     Button buttonAdd1ToPrice = new Button("Add 1 to price");
     Button buttonRemoveLoyalCostumers = new Button("Remove Loyal Costumers");
+    Button buttonAddWrong = new Button("Add Wrong!?!");
 
     public BikesView(@Autowired RentedBikeService rentedBikeService) {
         this.rentedBikeService = rentedBikeService;
@@ -31,17 +35,18 @@ public class BikesView extends VerticalLayout {
         setSizeFull();
 
 
-
         buttonRemoveAllRenters.addClickListener(_ -> removeAllRenters());
         buttonAdd10Renters.addClickListener(_ -> add10Renters());
         buttonAdd1ToPrice.addClickListener(_ -> add1ToPrice());
         buttonRemoveLoyalCostumers.addClickListener(_ -> removeLoyalCostumers());
+        buttonAddWrong.addClickListener(_ -> addWrong());
 
         add(new HorizontalLayout(
                 buttonRemoveAllRenters,
                 buttonAdd10Renters,
                 buttonAdd1ToPrice,
-                buttonRemoveLoyalCostumers
+                buttonRemoveLoyalCostumers,
+                buttonAddWrong
         ));
 
         grid.setSizeFull();
@@ -49,39 +54,74 @@ public class BikesView extends VerticalLayout {
         reload();
     }
 
-    private void removeLoyalCostumers() {
-        rentedBikeService.removeLoyalCostumers();
-        if (rentedBikeService.getRentedBikes().isEmpty()){
-            buttonRemoveAllRenters.setEnabled(false);
-            buttonAdd1ToPrice.setEnabled(false);
-            buttonRemoveLoyalCostumers.setEnabled(false);
+    private void addWrong() {
+        try {
+            rentedBikeService.addWrong();
+            reload();
+        } catch (RentedBikeException e) {
+            ConfirmDialog dialog = new ConfirmDialog();
+            dialog.setHeader("Error");
+            dialog.setText(e.getMessage());
+            dialog.setConfirmText("OK");
+            dialog.open();
+            reload();
         }
-        reload();
+
+    }
+
+    private void removeLoyalCostumers() {
+        try {
+            rentedBikeService.removeLoyalCostumers();
+            if (rentedBikeService.getRentedBikes().isEmpty()) {
+                buttonRemoveAllRenters.setEnabled(false);
+                buttonAdd1ToPrice.setEnabled(false);
+                buttonRemoveLoyalCostumers.setEnabled(false);
+            }
+            reload();
+        } catch (RentedBikeException e) {
+            Notification.show(e.getMessage());
+            reload();
+        }
     }
 
     private void add1ToPrice() {
-        rentedBikeService.add1ToPrice();
-        reload();
+        try {
+            rentedBikeService.add1ToPrice();
+            reload();
+        } catch (RentedBikeException e) {
+            Notification.show(e.getMessage());
+            reload();
+        }
     }
 
     private void add10Renters() {
-        rentedBikeService.add10Renters();
+        try {
+            rentedBikeService.add10Renters();
 
-        buttonRemoveAllRenters.setEnabled(true);
-        buttonAdd1ToPrice.setEnabled(true);
-        buttonRemoveLoyalCostumers.setEnabled(true);
+            buttonRemoveAllRenters.setEnabled(true);
+            buttonAdd1ToPrice.setEnabled(true);
+            buttonRemoveLoyalCostumers.setEnabled(true);
 
-        reload();
+            reload();
+        } catch (RentedBikeException e) {
+            Notification.show(e.getMessage());
+            reload();
+        }
     }
 
     private void removeAllRenters() {
-        rentedBikeService.removeAllRenters();
+        try {
+            rentedBikeService.removeAllRenters();
 
-        buttonRemoveAllRenters.setEnabled(false);
-        buttonAdd1ToPrice.setEnabled(false);
-        buttonRemoveLoyalCostumers.setEnabled(false);
+            buttonRemoveAllRenters.setEnabled(false);
+            buttonAdd1ToPrice.setEnabled(false);
+            buttonRemoveLoyalCostumers.setEnabled(false);
 
-        reload();
+            reload();
+        } catch (RentedBikeException e) {
+            Notification.show(e.getMessage());
+            reload();
+        }
     }
 
     private void reload() {
